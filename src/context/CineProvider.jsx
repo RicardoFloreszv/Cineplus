@@ -1,4 +1,4 @@
-import { useState, createContext } from 'react'
+import { useState, createContext, useEffect } from 'react'
 
 import { categoriasdata } from "../data/categorias"
 
@@ -19,6 +19,16 @@ const CineProvider = ({children}) => {
 
     //Resumen
     const [pedido, setPedido] = useState([])
+    const [total, setTotal] = useState(0)
+
+    useEffect(() => {
+                           //Parametro total y producto instanceado. por cada producto multiplica su precio * su cantidad y sumala al total. El 0 es en cuanto inicia total.
+        const nuevoTotal = pedido.reduce((total, producto) => (producto.precio * producto.cantidad) + total, 0)
+        setTotal(nuevoTotal)
+        
+    }, [pedido])
+    
+
 
     const handleCategoriaActual = (categoriaActual) => {
 
@@ -31,6 +41,7 @@ const CineProvider = ({children}) => {
 
     const handleProductoAlModal = (producto)  => {
         setProductoAlModal(producto)
+        handleModal()
     }
 
     const handlePedido = (producto) => {
@@ -53,9 +64,15 @@ const CineProvider = ({children}) => {
             setPedido([...pedido, producto])
             toast.success('Agregado al Pedido')            
         }
-
-        
     }
+
+    const eliminarPedido = (id) => {
+
+        const pedidoActualizadoEliminar = pedido.filter(pedido => pedido.id !== id )
+        setPedido(pedidoActualizadoEliminar)
+        toast.success('Pedido Eliminado')     
+    }
+
 
 
     return(
@@ -69,7 +86,9 @@ const CineProvider = ({children}) => {
                 productoAlModal,
                 handleProductoAlModal,
                 pedido,
-                handlePedido
+                handlePedido,
+                eliminarPedido,
+                total
 
                 
             }}
