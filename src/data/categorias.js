@@ -1,4 +1,4 @@
-const categoriasdata = [
+const categorias = [
     {
         icono: "cafe",
         nombre: "Café",
@@ -32,5 +32,5 @@ const categoriasdata = [
 ]
 
 export {
-    categoriasdata
+    categorias
 }

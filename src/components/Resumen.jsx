@@ -41,8 +41,6 @@ function Resumen() {
                       <input type="submit" 
                             className=" bg-zinc-700 hover:bg-slate-800 w-full p-2 cursor-pointer "
                             value="Confirmar Pedido"
-                            
-
                       />
                     </div>
                   </form>

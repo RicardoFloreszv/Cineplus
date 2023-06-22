@@ -9,6 +9,7 @@ function Sidebar() {
 
   const {categorias} = useCine()
 
+
   return (
     <aside className="md:w-72 bg-zinc-900">
             <div className="p-4 flex items-center justify-center">

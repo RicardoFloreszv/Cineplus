@@ -1,6 +1,7 @@
 import { useState, createContext, useEffect } from 'react'
+import clienteAxios from '../config/axios';
 
-import { categoriasdata } from "../data/categorias"
+
 
 //Evento del Toast
 import { toast } from 'react-toastify';
@@ -10,8 +11,8 @@ const CineContext = createContext()
 
 const CineProvider = ({children}) => {
 
-    const [categorias, setCategorias] = useState(categoriasdata)
-    const [categoriaActual, setCategoriaActual] = useState(categoriasdata[0])
+    const [categorias, setCategorias] = useState([])
+    const [categoriaActual, setCategoriaActual] = useState({})
 
     //Modal
     const [modal, setModal] = useState(false)
@@ -21,12 +22,32 @@ const CineProvider = ({children}) => {
     const [pedido, setPedido] = useState([])
     const [total, setTotal] = useState(0)
 
+    //Effect para Calcular el total del pedido.
     useEffect(() => {
                            //Parametro total y producto instanceado. por cada producto multiplica su precio * su cantidad y sumala al total. El 0 es en cuanto inicia total.
         const nuevoTotal = pedido.reduce((total, producto) => (producto.precio * producto.cantidad) + total, 0)
         setTotal(nuevoTotal)
         
     }, [pedido])
+    
+    //Consultar las Categorias a la base de datos.
+    const obtenerCategorias = async () => {
+
+        try {
+            //Peticion tipo get para traer categorias.
+            const {data} = await clienteAxios('/api/categorias')
+            setCategorias(data.data)
+            setCategoriaActual(data.data[0])
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    //Effect para consultar las categorias.
+    useEffect(() => {
+        obtenerCategorias()
+
+    }, [])
     
 
 
