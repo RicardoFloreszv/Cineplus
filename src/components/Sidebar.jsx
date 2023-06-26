@@ -12,10 +12,10 @@ function Sidebar() {
 
   return (
     <aside className="md:w-72 bg-zinc-900">
-            <div className="p-4 flex items-center justify-center">
+            <div className=" flex items-center justify-center">
                 <img 
-                    className="w-40"
-                    src="img/logo.jpg"
+                    className=""
+                    src="img/logocine.png"
                     alt="Imagen Logo"
                 />
             </div>
